@@ -1,0 +1,29 @@
+ID,Function,Potential Failure Mode,Image1 - Failure Mode,Image2 - Failure Mode,TDM,SPR,Potential Failure Effects,SEVERITY,Potential Causes,Image - Root Cause,OCCURRENCE,Preventive Controls,Image - Prevention,Detection Controls,Image - Detection,DETECTION,RPN,PFMEA Linkage,SPRRefLink,JIRA,JIRARefLink
+60,Display,Mura appearing on display when touch panel is activated.,qualib596_pic1.png,qualib596_pic2.png,QUAL-LIB-596,SPR 37804,Appearance of localized distortion on display,4,Pressure induced to the back of Display when Touch Panel is activated due to lack of clearance between the Display and underlying components causing interference.,dfd399d2-1434-4ef8-a11f-67a5e9fb4656.png,4,"Provide sufficient clearance between the back of display and underlying components.    Less rigid display
+components will need higher clearance to accommodate tendency to bend when Touch Panel is activated.",,Include display mura symptom in the list of check items during Engineering and Qualification testing.,,4,64,No,https://spr.zebra.com/ViewSPR.aspx?sprID=37804,,
+61,Display,Display showing random lines on screen,qualib411_pic1.png,,"QUAL-LIB-411
+",,Distorted image on display,4,Lack of supporting features on display integration allowing for movement during impact resulting to damage on Display FPC.,,4,Provide fillers e.g. foam pad to fill up void area between FPC bend area and edge of Display to restrict movement during impact.,,Teardown inspection on test samples following Drop tests,,3,48,No,,,
+62,Display,Light leakage on Display ,qualib412_pic1.png,,QUAL-LIB-412,,Localized discoloration on display,3,Peeling off of LED light bar from Back Light Unit (BLU) frame allowing for light to leak out.,,4,Select adhesive material that can effectively perform at extreme temp.,,"High temperature Burn-in
+Drop Test
+Tumble Test",,4,48,No,,,
+63,Display,Light leakage on display ,qualib415_pic1.png,,QUAL-LIB-415,,Localized discoloration on display,3,Excessive pressure being applied to the backlight in display integration stack-up design.,,4,"Minimize compression to the backlight in the display integration
+ - LCD rubber boot
+ - EMI spring position and force",,"Tolerance Analysis on display stackup to check for possible interference and verify equal compression around entire perimeter.
+
+Manufacturing test under various display color backgrounds.",,4,48,No,,,
+65,Display,Ripples on display,qualib417_pic1.png,,QUAL-LIB-417,,Appearance of localized distortion on display,4,Deformation of the backlight diffuser film due to lack of sufficient anchor points resulting to the locating anchors to deform during mechanical tests,,4,Design for sufficient anchor points to support the backlight diffuser film from folding during mechanical tests. ,qualib417_pic2.png,"Drop Test
+Tumble Test",,4,64,No,,,
+66,Display,Display not working,qualib418_pic1.png,,QUAL-LIB-418,,Unable to operate device,8,Crack on FPC display due to abrupt change in thickness causing sharp bend radius and high strain on FPC conductors.,,4,"Design guidelines on FPC around bend areas
+1) FPC's identified as dynamic shall specify conductor material as 1mil Rolled Annealed Copper (RA-Cu).
+2) Transitions in trace direction shall be placed outside of bend areas and away from areas where the width of the FPC changes.
+3) FPC thickness transitions shall not occur within the bend region and shall not be in the same location as the FPC width transition.
+4)  Hard stiffener e.g. stainless shall not occur parallel to the same location as the FPC trace.
+5) There should be no via holes (PTH) present within the bend region of the FPC.",,Drop and Tumble tests,,3,96,No,,,
+136,Display,Particle visible on display backlight,qualib413_pic1.png,,QUAL-LIB-413,,Cosmetic defect on display,4,"Lack of support structure on the back of display.
+Double-sided adhesive on backlight frame is not wide enough and adhesive strength is not adequate.",,4,"Design should provide support structure on the corners of the display to minimize movement of the backlight module during drops or tumble.
+Backlight adhesive contact area and adhesive strength should be sufficient to allow the backlight module to withstand impact shock.",,"Thermal Shock
+Drop test across temperature
+Tumble test",,3,48,No,,,
+137,Display,Ripples on display when finger pressed,qualib414_pic1.png,,QUAL-LIB-414,,Appearance of localized distortion on display,4,Interference points to the back of display module when pressure is applied on the display.,,4,"Design should provide a uniform support structure on the back of display. 
+Components placed underneath the display should have sufficient clearance to prevent interference when pressure is applied on the display during normal use.",,Add check item for ripples on display when pressure is applied during function testing.,,3,48,No,,,
+,,,,,,,,,,,,,,,,,,,,,

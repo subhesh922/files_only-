@@ -1,0 +1,45 @@
+ID,Function,Potential Failure Mode,Image1 - Failure Mode,Image2 - Failure Mode,TDM,SPR,Potential Failure Effects,SEVERITY,Potential Causes,Image - Root Cause,OCCURRENCE,Preventive Controls,Image - Prevention,Detection Controls,Image - Detection,DETECTION,RPN,PFMEA Linkage,SPRRefLink,JIRA,JIRARefLink,,,,
+138,Touch Panel,Touch Panel glass shattering,,,QUAL-LIB-399,SPR 28541,Unable to operate device,8,"TP glass shattering due to cracks initiating from the edges due to chippings i.e., poor edge quality.",,4,"Use alumino-silicate (Corning Gorilla Glass or equivalent) for applications with chemical strengthening.  Alumino-silicate glass can be post processed with Hydroflouric acid etch to improve edge quality.
+Specifications for glass component should include the glass substrate material.",,"Four-point bend testing on glass components
+First Article Inspection with microscope check on the glass edges for presence of chipping.
+Thermal Shock
+Drop Test across temperature
+Tumble Test
+Ball Drop on Touch Panel/ Display",,3,96,No,,,,,,,
+139,Touch Panel,Touch Panel damaged on the edge area,qualib401_pic1.png,,QUAL-LIB-401,"SPR 25746
+SPR 28424",Touch Panel unresponsive,7,Housing design did not adequately protect the edges of the touch panel,qualib401_pic2.png,4,"Design should provide bottom edge protection to housing and keypad bezel and maintain the active area aligned within the  touch panel specification.
+Touch panel design should include venting feature. Vent will allow for pressure equalization between touch panel and atmosphere.",,"Perform touch panel edge wear/ swipe testing.
+Touch Panel durability life test.",,3,84,No,,,,,,,
+140,Touch Panel,IP leak failure on Touch Panel,,,QUAL-LIB-403,,IP seal compromised and could result to potential function loss,6,Touch panel sensor surface does not cover the touch panel outline so it does not match with sealing adhesive area.,,4,Touch panel design should ensure the outline is covered. Add fake sensor material if required to cover any exposed areas and use resin to fill any gaps.,qualib403_pic1.png,"Thermal Shock
+IP Tests",,3,72,No,,,,,,,
+141,Touch Panel,ESD test failure at 12KV,qualib405_pic1.png,,QUAL-LIB-405,,Touch Panel partially operative or permanently damage ,7,Thickness of metal jumper between 8 - 16 microns could get damaged and bridge the glass-glass SITO touch panel configuration.,,4,Design should ensure minimum thickness of 24 microns on glass-glass SITO (single-sided ITO) touch panel configuration.,,Thermal Shock + Operating Temperature Cycling + Vibration + ESD,,3,84,No,,,,,,,
+142,Touch Panel,Puffiness on Touch Panel,qualib408_pic1.png,,QUAL-LIB-408,SPR 24297,Puffiness increases the stress on the ITO layer and can lead to premature breakdown of the ITO resulting in non-linearity and dead zones.,6,"Puffiness caused by the blocking of the vents in the touch panel design.
+Vents can be blocked due to the flow of the adhesive that bonds the layers of the touch panel into the venting areas.",,4,"Design to ensure the vents will not be blocked as a result of adhesive flow. 
+The Display/Touch Panel gasket should be designed to provide relief in the areas of the vent to allow for unrestricted air flow.",,"Thermal Shock
+Operating Temperature Cycling
+Low Temperature Operating Function Test
+High Temperature Operating Function Test",,3,72,No,,,,,,,
+143,Touch Panel,Distorted image when pressure is applied to Touch Panel,qualib523_pic1.png,,QUAL-LIB-523,,Localized distortion on display,4,Inadequate clearance between Touch Panel / Display shield can and mainboard shields causing pressure being applied on back of display resulting to localized distortion.,,4,"1) Perform 1st order approximation (hand calculation) of Touch Panel / Display bending during user activation, approximately 100 grams.
+2) Perform tolerance analysis to determine clearance between display shield and mainboard shield on the worst case stack-up. Clearance should be greater than the first order approximation.
+3) Perform FEA of finalized Touch Panel + Display design to determine maximum applied force to cause interference between display shield can and mainboard shields.  There should be clearance with the shield can even in loaded condition.",,"Perform following test to establish presence or conditions necessary to create LCD distortion from Touch Panel use.  
+
+First determine the location minimum clearance between the shield can of the Display and mainboard.  Apply compression at this location.
+a) Test on Instron machine. Lay sample on a hard flat surface.
+b) Have the plunger push down on the Touch Panel to a given force carefully observing the Display during the pull away for pressure marks.
+c) If no pressure marks observed, increase pressure by 10g increments until distortion is observed.",qualib523_pic2.png,3,48,No,,,,,,,
+144,Touch Panel,Touch Panel is lifting up from plastic housing,qualib524_pic1.png,,QUAL-LIB-524,,Sealing compromised around Touch Panel could result to function loss.,6,"Incorrect contact angle between the Touch Panel, Double-sided adhesive and Plastic housing.
+Impurities on the bonding surface between Touch Panel and Plastic housing and bonding fixture parameters not optimized.",,4,"Design should establish if the contact angle between mating surfaces is correct.  Dyne Pen test can be used for this purpose. Confirm there is no interference between the mating surfaces e.g. TP sensor film, FPC, etc.
+Ensure cleanliness on the bonding surfaces.  Consider plasma cleaning if needed.
+Ensure bonding parameters i.e., pressure and hold time are optimized. ",,"Thermal Shock
+Drop Test across temperature
+Tumble Test",,3,72,Yes,,,,,,,
+145,Touch Panel,Touch Panel cracking during AFM test cycle,qualib610_pic1.png,,QUAL-LIB-610,"JIRA ME-7701
+JIRA ME-8355",Possible premature Touch Panel failure in the field rendering the device inoperable,6,"Lack of protective bezel or ledge on top housing to protect the Touch Panel / Display assembly.
+Prioritization of ID preference over mechanical design intent.
+",,4,Design should include protective features such as bezel depth on Top Housing to protect the Touch Panel / Display assembly.,,"mini-AFM test cycle
+AFM test cycle
+Drops across temperature
+Tumble test",,3,72,No,,,,,,,
+168,Touch Panel,Scratches and damages on Touch Panel of Tablet products.,Reserved_ImageAttachment_[32]_[Image_x0020__x002d__x0020_Failur][36]_[5796e500-4e15-4246-9e5b-317d8255ea35][2]_[17].jpeg,Reserved_ImageAttachment_[13]_[Image2_x002d_][36]_[7b277d89-3a7f-45a4-8c74-bb28a5d1e212][2]_[21].jpeg,,"SPR53826, SPR53637, SPR50324",Reduced image clarity and readability.,5,The  anti-reflective coating application process of using Chemical Vapor Deposition (CVD) is susceptible to damage compared to the Sputtering process regardless of the hardness of the coating.,,4,"1) Sputtering deposition process should be the preferred process for anti-reflective coating.
+
+2) Tablet SKU's should always be released with a screen protector accessory to prevent premature wear out on touch panel of the tablet.",Reserved_ImageAttachment_[22]_[Image_x002d_Prevention][8]_[Picture5][2]_[27].jpg,Conduct Falling Sand testmethod following ASTM D968-22 method A.,,4,80,No,https://jira.zebra.com/browse/SPR-53826,,,,,,
