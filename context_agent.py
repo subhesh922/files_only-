@@ -642,21 +642,20 @@ class ContextAgent:
                     match_count += 1
             return match_count > 0 and (match_count / max(1, len(chunks))) >= 0.10
 
-        # # === Phase 1: Repair Data (re-enabled with controlled looseness) ===
-        # if has_substring(rd_chunks) or rare_token_fallback(rd_chunks, 1, 0.05) or direct_semantic_match(rd_chunks):
-        #     return "repair_data"
-        # === Phase 1: Repair Data (slightly controlled) ===
-        if (has_substring(rd_chunks) or rare_token_fallback(rd_chunks, 1, 0.05)) and not rare_token_fallback(kb_chunks, 2, 0.20):
-            return "repair_data"
 
+        # === Phase 1: Repair Data (slightly controlled) ===
+        if (has_substring(rd_chunks) or rare_token_fallback(rd_chunks, 5, 0.08) or direct_semantic_match(rd_chunks)) \
+                and not rare_token_fallback(kb_chunks, 3, 0.25):
+            return "repair_data"
 
         # === Phase 2: SPRLL ===
         if has_substring(sprll_chunks) or rare_token_fallback(sprll_chunks, 1, 0.10):
             return "sprll"
 
         # === Phase 3: PRDs ===
-        if has_substring(prd_chunks) or direct_semantic_match(prd_chunks):
+        if has_substring(prd_chunks) or rare_token_fallback(prd_chunks, 2, 0.25):
             return "prds"
+
 
         # === Phase 4: KB (slightly boosted) ===
         if has_substring(kb_chunks) or rare_token_fallback(kb_chunks, 3, 0.28):
@@ -664,150 +663,13 @@ class ContextAgent:
 
         # === Phase 5: AI fallback ===
         all_text = " ".join(get_text(c) for c in all_chunks)
-        if any(tok in all_text for tok in fm_tokens):
+        # if any(tok in all_text for tok in fm_tokens):
+        #     return "AI"
+        if not (has_substring(kb_chunks) or has_substring(sprll_chunks) or has_substring(prd_chunks) or has_substring(rd_chunks)):
             return "AI"
 
+
         return "AI"
-
-
-
-      
-      
-    
-#     def _determine_fm_origin(
-#     self,
-#     row: Dict,
-#     kb_chunks: List[Dict],
-#     sprll_chunks: List[Dict],
-#     prd_chunks: List[Dict],
-#     rd_chunks: List[Dict],
-# ) -> str:
-#         """
-#         Final pragmatic version:
-#         - KB: strict (avoid overreach)
-#         - SPRLL: moderate fuzzy
-#         - PRD & Repair_Data: chunk-size agnostic (direct keyword/phrase match)
-#         - AI: fallback
-#         """
-#         import re
-#         from collections import Counter
-
-#         fm_raw = (row.get("Failure Mode") or "").strip()
-#         if not fm_raw:
-#             return "AI"
-
-#         # ---------- helpers ----------
-#         def norm(s: str) -> str:
-#             s = (s or "").casefold()
-#             s = s.replace("–", "-").replace("—", "-").replace("/", " ").replace("_", " ")
-#             s = re.sub(r'["“”]', "", s)
-#             s = re.sub(r"\s+", " ", s).strip()
-#             return s
-
-#         def get_payload(c):
-#             if isinstance(c, tuple):
-#                 return c[2] if len(c) >= 3 else {}
-#             return c.get("payload", {}) if isinstance(c, dict) else {}
-
-#         def get_text(c) -> str:
-#             p = get_payload(c) or {}
-#             mt = p.get("match_text_fm")
-#             if mt:
-#                 return norm(str(mt))
-#             if isinstance(c, tuple):
-#                 return norm(c[1] or "")
-#             return norm((c.get("text") or ""))
-
-#         def tokenize(s: str):
-#             return [t for t in re.split(r"[^a-z0-9]+", s) if t]
-
-#         fm_norm = norm(fm_raw)
-#         fm_tokens = [t for t in tokenize(fm_norm) if len(t) >= 4]
-#         fm_token_set = set(fm_tokens)
-
-#         all_chunks = (kb_chunks or []) + (sprll_chunks or []) + (prd_chunks or []) + (rd_chunks or [])
-#         if not all_chunks:
-#             return "AI"
-
-#         MIN_TOKEN_LEN = 4
-#         GENERIC_DF_FRAC = 0.25
-
-#         df = Counter()
-#         total_docs = 0
-#         for ch in all_chunks:
-#             text = get_text(ch)
-#             if not text:
-#                 continue
-#             total_docs += 1
-#             toks = {t for t in tokenize(text) if len(t) >= MIN_TOKEN_LEN}
-#             df.update(toks)
-
-#         generic = {t for t, c in df.items() if (c / max(1, total_docs)) >= GENERIC_DF_FRAC}
-#         fm_tokens_rare = [t for t in fm_token_set if t not in generic]
-#         fm_tokens_rare_set = set(fm_tokens_rare)
-
-#         # ---------- generic fuzzy helpers ----------
-#         def has_substring(chunks):
-#             for c in chunks:
-#                 if fm_norm and fm_norm in get_text(c):
-#                     return True
-#             return False
-
-#         def rare_token_fallback(chunks, min_hits, min_coverage):
-#             if not chunks or not fm_tokens_rare_set:
-#                 return False
-#             total_rare = len(fm_tokens_rare_set)
-#             for c in chunks:
-#                 t = get_text(c)
-#                 hits = {tok for tok in fm_tokens_rare_set if tok in t}
-#                 if len(hits) >= min_hits and (len(hits) / max(1, total_rare)) >= min_coverage:
-#                     return True
-#             return False
-
-#         # ---------- chunk-size-agnostic matching ----------
-#         def direct_semantic_match(chunks):
-#             """Lenient check: if 1–2 tokens appear anywhere in chunk text."""
-#             if not chunks:
-#                 return False
-#             for c in chunks:
-#                 text = get_text(c)
-#                 if not text:
-#                     continue
-#                 # small token overlap = immediate positive
-#                 overlap = len(fm_token_set & set(tokenize(text)))
-#                 if overlap >= 1:  # even one relevant token
-#                     return True
-#                 # very loose substring partial match
-#                 for tok in fm_tokens:
-#                     if tok[:4] in text:  # partial token fragment match
-#                         return True
-#             return False
-
-#         # === Phase 1: Repair Data (top priority, chunk-size independent) ===
-#         if has_substring(rd_chunks) or direct_semantic_match(rd_chunks):
-#             return "repair_data"
-
-#         # === Phase 2: SPRLL (fuzzy moderate) ===
-#         if has_substring(sprll_chunks) or rare_token_fallback(sprll_chunks, 1, 0.10):
-#             return "sprll"
-
-#         # === Phase 3: PRDs (chunk-size independent) ===
-#         if has_substring(prd_chunks) or direct_semantic_match(prd_chunks):
-#             return "prds"
-
-#         # === Phase 4: KB (strict) ===
-#         if has_substring(kb_chunks) or rare_token_fallback(kb_chunks, 4, 0.35):
-#             return "kb"
-
-#         # === Phase 5: AI fallback ===
-#         all_text = " ".join(get_text(c) for c in all_chunks)
-#         if any(tok in all_text for tok in fm_tokens):
-#             return "AI"
-
-#         return "AI"
-
-
-
 
     def _fallback(self, results: List[Dict], subsystem: str) -> List[Dict]:
         rows = []
